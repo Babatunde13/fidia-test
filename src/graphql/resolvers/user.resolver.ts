@@ -17,13 +17,13 @@ import {
     verifyUser
 } from '../../utils/auth'
 import { sendEmail } from '../../utils/sendMail'
+import envs from '../../config/envs'
 
 @Resolver()
 export class UserResolver {
     @Mutation(() => UserResponse)
     async signUp(
-        @Args({ validate: true }) args: CreateUserArgs,
-        @Ctx() { req }: MyContext
+        @Args({ validate: true }) args: CreateUserArgs
     ): Promise<UserResponse> {
         args.email = args.email.toLowerCase().trim()
         args.password = await hashPassword(args.password)
@@ -55,7 +55,7 @@ export class UserResolver {
                 {
                     token: generateToken({ _id: user._id }, '30m'),
                     name: user.name,
-                    host: req.protocol + '://' + req.hostname + ':' + req.socket.localPort
+                    host: envs.HOST
                 }
             )
 
@@ -120,7 +120,7 @@ export class UserResolver {
     @Mutation(() => ResStatus)
     @UseMiddleware(authChecker)
     async resendVerificationMail(
-        @Ctx() { payload, req }: MyContext
+        @Ctx() { payload }: MyContext
     ): Promise<ResStatus> {
         try {
             const user = await userModel.findOne({ _id: payload?.user_id })
@@ -139,7 +139,7 @@ export class UserResolver {
             {
                 token: generateToken({ _id: user._id }, '30m'),
                 name: user.name,
-                host: req.protocol + '://' + req.hostname + ':' + req.socket.localPort
+                host: envs.HOST
             }
         )
 

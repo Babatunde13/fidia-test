@@ -9,6 +9,7 @@ export default {
     ENV: envVars,
     MONGO_DB_URI: process.env.MONGO_DB_URI || 'mongodb://localhost:27017/fidia-test',
     PORT: process.env.PORT || 4000,
+    HOST: process.env.HOST || 'http://localhost:4000',
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || 'secret',
     mailgun: {
         apiKey: process.env.MAILGUN_API_KEY || 'key-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',

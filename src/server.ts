@@ -30,7 +30,7 @@ export default async function graphQlServer (app: Application, PORT: string | nu
 
     const apolloServer = new ApolloServer({
         schema,
-        introspection: envs.INTROSPECTION,
+        introspection: true,
         context: ({ req, res }) => ({ req, res }),
         plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
         validationRules: [depthLimit(10)],
