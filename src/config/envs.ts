@@ -5,7 +5,7 @@ config()
 const envVars = process.env.NODE_ENV as 'development' | 'staging' | 'production'
 
 export default {
-    INTROSPECTION: envVars !== 'production',
+    INTROSPECTION: true,
     ENV: envVars,
     MONGO_DB_URI: process.env.MONGO_DB_URI || 'mongodb://localhost:27017/fidia-test',
     PORT: process.env.PORT || 4000,
